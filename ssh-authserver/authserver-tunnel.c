@@ -110,10 +110,9 @@ void getAccessInformation(MYSQL_STMT *statement, long long server, long long use
         result = mysql_stmt_fetch(statement); 
         if (result == MYSQL_NO_DATA) break; 
         if (result != 0) error("Could not parse statement result.");
+        
         found = 1;
-
-        long length = fields[0].length;
-        host[length] = '\0';
+        host[fields[0].length_value] = '\0';
         
         if (found == 1) {
             printf(",%s:%d", host, port);

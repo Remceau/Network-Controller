@@ -18,11 +18,9 @@ if [[ $1 == "ssh-authserver" ]]; then
     rm -rf .build/linux/ssh-authserver/
     mkdir .build/linux/ssh-authserver/
 
-    # Copy source
+    # authserver
     printf "\033[0;30mcp ssh-authserver/authserver.c .build/linux/ssh-authserver/\n"
     cp ssh-authserver/authserver.c .build/linux/ssh-authserver/
-
-    # Insert Environment
     printf "\033[0;30msed -i \"s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
     sed -i "s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g" .build/linux/ssh-authserver/authserver.c
     printf "\033[0;30msed -i \"s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['username'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
@@ -31,14 +29,31 @@ if [[ $1 == "ssh-authserver" ]]; then
     sed -i "s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['password'])")/g" .build/linux/ssh-authserver/authserver.c
     printf "\033[0;30msed -i \"s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
     sed -i "s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g" .build/linux/ssh-authserver/authserver.c
-
-    # Compile source
     printf "\033[0;30mgcc -o .build/linux/ssh-authserver/authserver .build/linux/ssh-authserver/authserver.c $(mariadb_config --libs)\n"
     gcc -o .build/linux/ssh-authserver/authserver .build/linux/ssh-authserver/authserver.c $(mariadb_config --libs)
+    printf "\033[1;34mARTIFACT \033[0m.build/linux/ssh-authserver/authserver\n"
 
+    # authserver-tunnel
+    printf "\033[0;30mcp ssh-authserver/authserver-tunnel.c .build/linux/ssh-authserver/\n"
+    cp ssh-authserver/authserver-tunnel.c .build/linux/ssh-authserver/
+    printf "\033[0;30msed -i \"s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g\" .build/linux/ssh-authserver/authserver-tunnel.c\n"
+    sed -i "s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g" .build/linux/ssh-authserver/authserver-tunnel.c
+    printf "\033[0;30msed -i \"s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['username'])")/g\" .build/linux/ssh-authserver/authserver-tunnel.c\n"
+    sed -i "s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['username'])")/g" .build/linux/ssh-authserver/authserver-tunnel.c
+    printf "\033[0;30msed -i \"s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['password'])")/g\" .build/linux/ssh-authserver/authserver-tunnel.c\n"
+    sed -i "s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['password'])")/g" .build/linux/ssh-authserver/authserver-tunnel.c
+    printf "\033[0;30msed -i \"s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g\" .build/linux/ssh-authserver/authserver-tunnel.c\n"
+    sed -i "s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g" .build/linux/ssh-authserver/authserver-tunnel.c
+    printf "\033[0;30mgcc -o .build/linux/ssh-authserver/authserver-tunnel .build/linux/ssh-authserver/authserver-tunnel.c $(mariadb_config --libs)\n"
+    gcc -o .build/linux/ssh-authserver/authserver-tunnel .build/linux/ssh-authserver/authserver-tunnel.c $(mariadb_config --libs)
+    printf "\033[1;34mARTIFACT \033[0m.build/linux/ssh-authserver/authserver-tunnel\n"
+
+    # Success
     printf "\033[1;32mSUCCESS \033[0m$1 linux $(arch)\n"
 
 else
+
     printf "\033[1;31mERROR \033[0mTarget doesn't exist\n" 1>&2
     exit 1
+    
 fi
