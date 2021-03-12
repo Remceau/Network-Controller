@@ -38,13 +38,13 @@ void PrepareStatements()
 
     statementLocal = mysql_stmt_init(connection);
     if (statementLocal == NULL) error("Could not create prepared statement.");
-    result = mysql_stmt_prepare(statementLocal, "SELECT DISTINCT host, port FROM SshTunnel WHERE server = ? AND (entity = ? OR entity = IN (SELECT organization FROM Employee WHERE user = ?) OR entity = IN (SELECT team FROM Member WHERE user = ?)) AND (type = 1 OR type = 3)", 224);
+    result = mysql_stmt_prepare(statementLocal, "SELECT DISTINCT host, port FROM SshTunnel WHERE server = ? AND (entity = ? OR entity IN (SELECT organization FROM Employee WHERE user = ?) OR entity IN (SELECT team FROM Member WHERE user = ?)) AND (type = 1 OR type = 3)", 224);
     if (result != 0) error("Could not prepare statement.");
 
 
     statementRemote = mysql_stmt_init(connection);
     if (statementRemote == NULL) error("Could not create prepared statement.");
-    result = mysql_stmt_prepare(statementRemote, "SELECT DISTINCT host, port FROM SshTunnel WHERE server = ? AND (entity = ? OR entity = IN (SELECT organization FROM Employee WHERE user = ?) OR entity = IN (SELECT team FROM Member WHERE user = ?)) AND (type = 2 OR type = 3)", 224);
+    result = mysql_stmt_prepare(statementRemote, "SELECT DISTINCT host, port FROM SshTunnel WHERE server = ? AND (entity = ? OR entity IN (SELECT organization FROM Employee WHERE user = ?) OR entity IN (SELECT team FROM Member WHERE user = ?)) AND (type = 2 OR type = 3)", 224);
     if (result != 0) error("Could not prepare statement.");
 }
 

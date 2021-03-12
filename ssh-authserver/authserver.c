@@ -35,7 +35,7 @@ void PrepareStatements()
     int result;
     statement = mysql_stmt_init(connection);
     if (statement == NULL) error("Could not create prepared statement.");
-    result = mysql_stmt_prepare(statement, "SELECT DISTINCT account FROM SshAccount WHERE server = ? AND account = ? AND (entity = ? OR entity = IN (SELECT organization FROM Employee WHERE user = ?) OR entity = IN (SELECT team FROM Member WHERE user = ?))", 211);
+    result = mysql_stmt_prepare(statement, "SELECT DISTINCT account FROM SshAccount WHERE server = ? AND account = ? AND (entity = ? OR entity IN (SELECT organization FROM Employee WHERE user = ?) OR entity IN (SELECT team FROM Member WHERE user = ?))", 207);
     if (result != 0) error("Could not prepare statement.");
 }
 
