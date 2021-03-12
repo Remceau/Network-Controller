@@ -50,7 +50,8 @@ void PrepareStatements()
 
 void DestroyStatements()
 {
-    mysql_stmt_close(statement);
+    mysql_stmt_close(statementLocal);
+    mysql_stmt_close(statementRemote);
 }
 
 
