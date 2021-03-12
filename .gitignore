@@ -2,3 +2,4 @@
 .dependencies/
 .include/
 .vscode/
+environment.json
