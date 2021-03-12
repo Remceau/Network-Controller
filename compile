@@ -23,14 +23,14 @@ if [[ $1 == "ssh-authserver" ]]; then
     cp ssh-authserver/authserver.c .build/linux/ssh-authserver/
 
     # Insert Environment
-    printf "\033[0;30msed -i \"s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['host'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
-    sed -i "s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['host'])")/g" .build/linux/ssh-authserver/authserver.c
-    printf "\033[0;30msed -i \"s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['username'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
-    sed -i "s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['username'])")/g" .build/linux/ssh-authserver/authserver.c
-    printf "\033[0;30msed -i \"s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['password'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
-    sed -i "s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['password'])")/g" .build/linux/ssh-authserver/authserver.c
-    printf "\033[0;30msed -i \"s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['database'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
-    sed -i "s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['database']['database'])")/g" .build/linux/ssh-authserver/authserver.c
+    printf "\033[0;30msed -i \"s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
+    sed -i "s/<database.host>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['host'])")/g" .build/linux/ssh-authserver/authserver.c
+    printf "\033[0;30msed -i \"s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['username'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
+    sed -i "s/<database.username>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['username'])")/g" .build/linux/ssh-authserver/authserver.c
+    printf "\033[0;30msed -i \"s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['password'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
+    sed -i "s/<database.password>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['password'])")/g" .build/linux/ssh-authserver/authserver.c
+    printf "\033[0;30msed -i \"s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g\" .build/linux/ssh-authserver/authserver.c\n"
+    sed -i "s/<database.database>/$(python3 -c "import sys, json; print(json.load(open('environment.json'))['ssh-authserver']['database']['database'])")/g" .build/linux/ssh-authserver/authserver.c
 
     # Compile source
     printf "\033[0;30mgcc -o .build/linux/ssh-authserver/authserver .build/linux/ssh-authserver/authserver.c $(mariadb_config --libs)\n"
