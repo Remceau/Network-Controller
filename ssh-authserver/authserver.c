@@ -40,7 +40,7 @@ void Connect()
 {
     connection = mysql_init(NULL); 
     if (connection == NULL) error("Could not initialize connection.");
-    connection = mysql_real_connect(connection, "localhost", "sshd", "7Y31RCKsrTsvdmpI", "Network", 3306, NULL, 0);
+    connection = mysql_real_connect(connection, "<database.host>", "<database.username>", "<database.password>", "<database.database>", 3306, NULL, 0);
     if (connection == NULL) error("Could not connect to the database.");
 }
 
